@@ -36,16 +36,8 @@
           "value": "E:\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake"
         },
         {
-          "name": "BUILD_TESTS",
-          "value": "TRUE"
-        },
-        {
-          "name": "CMAKE_C_COMPILER",
-          "value": "clang-cl"
-        },
-        {
-          "name": "CMAKE_CXX_COMPILER",
-          "value": "clang-cl"
+          "name": "BUILD_TESTBED",
+          "value": "ON"
         }
       ],
       "cmakeCommandArgs": "",

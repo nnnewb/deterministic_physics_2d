@@ -14,18 +14,14 @@ include_directories(${PROJECT_SOURCE_DIR}/src)
 
 add_library(${PROJECT_NAME} ${${PROJECT_NAME}_SOURCE_FILES} src/aaa_unused.cpp)
 
-option(BUILD_TESTS OFF "Build unit tests for ${PROJECT_NAME}")
-if(BUILD_TESTS)
-    find_package(GTest REQUIRED)
-    enable_testing(ON)
-
-    # collect source files
-    file(
-        GLOB_RECURSE ${PROJECT_NAME}_TEST_SOURCE_FILES
-        "tests/*.cpp"
-        "tests/*.h")
-
-    add_executable(all_tests ${${PROJECT_NAME}_TEST_SOURCE_FILES})
-    add_test(all_tests all_tests)
-    target_link_libraries(all_tests GTest::GTest GTest::Main)
-endif(BUILD_TESTS)
+option(BUILD_TESTBED ON "Build testbed")
+if(BUILD_TESTBED)
+	add_subdirectory("${PROJECT_SOURCE_DIR}/3rd_party/libSDL2pp")
+	include_directories(${SDL2PP_INCLUDE_DIRS})
+	file(
+		GLOB_RECURSE TESTBED_SOURCE_FILES
+		"testbed/*.cpp"
+		"testbed/*.h")
+	add_executable(testbed ${TESTBED_SOURCE_FILES})
+	target_link_libraries(testbed ${SDL2PP_LIBRARIES})
+endif(BUILD_TESTBED)
