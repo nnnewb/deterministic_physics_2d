@@ -1,6 +1,7 @@
 #ifndef WEAK_PTR_PHYS_OBJ_H
 #define WEAK_PTR_PHYS_OBJ_H
 #include "aabb.h"
+#include "phys_body.h"
 
 namespace weak_ptr {
     class UserData {
@@ -21,7 +22,7 @@ namespace weak_ptr {
     template <typename Real>
     struct phys_obj {
         UserData* user_data;
-        aabb<Real> aabb;
+        phys_body<Real> body;
     };
 }
 

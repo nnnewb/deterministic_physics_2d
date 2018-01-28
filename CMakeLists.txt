@@ -12,7 +12,7 @@ file(
 
 include_directories(${PROJECT_SOURCE_DIR}/src)
 
-add_library(${PROJECT_NAME} ${${PROJECT_NAME}_SOURCE_FILES})
+add_library(${PROJECT_NAME} ${${PROJECT_NAME}_SOURCE_FILES} src/aaa_unused.cpp)
 
 option(${PROJECT_NAME}_BUILD_TESTS OFF "Build unit tests for ${PROJECT_NAME}")
 if(${PROJECT_NAME})
