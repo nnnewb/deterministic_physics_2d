@@ -14,8 +14,8 @@ include_directories(${PROJECT_SOURCE_DIR}/src)
 
 add_library(${PROJECT_NAME} ${${PROJECT_NAME}_SOURCE_FILES} src/aaa_unused.cpp)
 
-option(${PROJECT_NAME}_BUILD_TESTS OFF "Build unit tests for ${PROJECT_NAME}")
-if(${PROJECT_NAME})
+option(BUILD_TESTS OFF "Build unit tests for ${PROJECT_NAME}")
+if(BUILD_TESTS)
     find_package(GTest REQUIRED)
     enable_testing(ON)
 
@@ -27,5 +27,5 @@ if(${PROJECT_NAME})
 
     add_executable(all_tests ${${PROJECT_NAME}_TEST_SOURCE_FILES})
     add_test(all_tests all_tests)
-    target_link_libraries(all_tests GTest::GTest GTest::GTestMain)
-endif(${PROJECT_NAME})
+    target_link_libraries(all_tests GTest::GTest GTest::Main)
+endif(BUILD_TESTS)

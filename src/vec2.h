@@ -22,6 +22,22 @@ namespace weak_ptr {
 
         vec2& operator=(vec2&& other) noexcept;
 
+        constexpr vec2 operator+(const vec2& rhs) const noexcept {
+            return {x + rhs.x, y + rhs.y};
+        }
+
+        constexpr vec2 operator-(const vec2& rhs) const noexcept {
+            return {x - rhs.x, y - rhs.y};
+        }
+
+        constexpr vec2 operator*(const vec2& rhs) const noexcept {
+            return {x * rhs.x, y * rhs.y};
+        }
+
+        constexpr vec2 operator/(const vec2& rhs) const noexcept {
+            return {x / rhs.x, y / rhs.y};
+        }
+
         friend bool operator==(const vec2& lhs, const vec2& rhs) {
             return lhs.x == rhs.x
                 && lhs.y == rhs.y;

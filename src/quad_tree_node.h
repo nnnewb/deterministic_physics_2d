@@ -1,5 +1,6 @@
 #ifndef WEAK_PTR_QUAD_TREE_NODE_H
 #define WEAK_PTR_QUAD_TREE_NODE_H
+#include <array>
 #include <memory>
 #include <vector>
 #include "aabb.h"
@@ -40,8 +41,8 @@ namespace weak_ptr {
             }
         }
         else {
-            quad_tree_node* result = nullptr;
-            for (quad_tree_node* node : nodes) {
+            std::shared_ptr<quad_tree_node> result = nullptr;
+            for (auto node : nodes) {
                 if (obj->body.box.has_intersection(node->boarder_box)) {
                     if (nullptr == result) {
                         result = node;
@@ -76,20 +77,18 @@ namespace weak_ptr {
             boarder_box.max
         };
 
-        nodes = {
-            new quad_tree_node{lt, objs_maximum},
-            new quad_tree_node{rt, objs_maximum},
-            new quad_tree_node{lb, objs_maximum},
-            new quad_tree_node{rb, objs_maximum}
-        };
+        nodes[0] = std::make_shared<quad_tree_node>(lt, objs_maximum);
+        nodes[1] = std::make_shared<quad_tree_node>(rt, objs_maximum);
+        nodes[2] = std::make_shared<quad_tree_node>(lb, objs_maximum);
+        nodes[3] = std::make_shared<quad_tree_node>(rt, objs_maximum);
 
         is_leaf = false;
 
-        std::vector<phys_obj<Real>> objs_copy;
+        std::vector<phys_obj<Real>*> objs_copy;
         std::swap(objs_copy, objs);
 
         // re-insert object into quad_tree_node
-        for (phys_obj<Real> obj : objs_copy) {
+        for (auto obj : objs_copy) {
             insert(obj);
         }
     }

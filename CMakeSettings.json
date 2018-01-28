@@ -30,6 +30,24 @@
       "inheritEnvironments": [ "msvc_x64_x64" ],
       "buildRoot": "${env.USERPROFILE}\\CMakeBuilds\\${workspaceHash}\\build\\${name}",
       "installRoot": "${env.USERPROFILE}\\CMakeBuilds\\${workspaceHash}\\install\\${name}",
+      "variables": [
+        {
+          "name": "CMAKE_TOOLCHAIN_FILE",
+          "value": "E:\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake"
+        },
+        {
+          "name": "BUILD_TESTS",
+          "value": "TRUE"
+        },
+        {
+          "name": "CMAKE_C_COMPILER",
+          "value": "clang-cl"
+        },
+        {
+          "name": "CMAKE_CXX_COMPILER",
+          "value": "clang-cl"
+        }
+      ],
       "cmakeCommandArgs": "",
       "buildCommandArgs": "-v",
       "ctestCommandArgs": ""
