@@ -25,7 +25,7 @@ namespace weak_ptr {
 
         rect& operator=(rect&& other) noexcept;
 
-        aabb<Real> as_aabb() noexcept;
+        aabb<Real> as_aabb() const noexcept;
 
         bool has_intersection(const rect& other) noexcept;
     };
@@ -66,7 +66,7 @@ namespace weak_ptr {
     }
 
     template <typename Real>
-    aabb<Real> rect<Real>::as_aabb() noexcept {
+    aabb<Real> rect<Real>::as_aabb() const noexcept {
         return aabb<Real>{
             {
                 center.x - width / 2,
