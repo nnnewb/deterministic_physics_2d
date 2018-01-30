@@ -7,13 +7,13 @@ namespace weak_ptr {
     struct phys_obj_builder;
 
     template <typename Real>
-    class World {
+    class world {
         quad_tree<Real> quad_tree_;
     };
 
     template<typename Real>
     struct phys_obj_builder {
-        World<Real>* world;
+        world<Real>* world;
 
         phys_obj<Real> build(circle<Real> shape);
         phys_obj<Real> build(rect<Real> shape);

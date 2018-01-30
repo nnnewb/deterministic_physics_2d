@@ -4,13 +4,16 @@
 #include "SDL2pp/Window.hh"
 #include "SDL2pp/Renderer.hh"
 #include "render.h"
+#include "cases/case-1.h"
 
 using namespace weak_ptr;
 
 int main(int argc, char* argv[]) {
     quad_tree_node<double> root{{{0, 0}, {800, 600}}, 25};
     std::vector<phys_obj<double>> objs;
-    objs.assign(50, phys_obj<double>{phys_body<double>{rect<double>{{400, 300}, 50, 50}}});
+    // objs.assign(50, phys_obj<double>{phys_body<double>{rect<double>{{400, 300}, 50, 50}}});
+    objs.push_back(phys_obj<double>{phys_body<double>{rect<double>{{350, 150}, 50, 50}}});
+    objs.push_back(phys_obj<double>{phys_body<double>{rect<double>{{650, 450}, 50, 50}}});
     for (auto obj : objs) {
         root.insert(&obj);
     }

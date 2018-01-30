@@ -1,8 +1,11 @@
 #ifndef WEAK_PTR_RENDER_H
 #define WEAK_PTR_RENDER_H
-#include "phys_obj.h"
+
 #include "SDL2pp/Renderer.hh"
 #include "quad_tree_node.h"
+#include "SDL2pp/Color.hh"
+#include "case.h"
+#include "phys_obj.h"
 
 namespace weak_ptr {
     template <typename Real>
@@ -31,4 +34,5 @@ namespace weak_ptr {
         }
     }
 }
+
 #endif // WEAK_PTR_RENDER_H
