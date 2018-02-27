@@ -4,23 +4,47 @@
 #include "SDL2pp/Window.hh"
 #include "SDL2pp/Renderer.hh"
 #include "render.h"
-#include "cases/case-1.h"
 
 using namespace weak_ptr;
 
 int main(int argc, char* argv[]) {
-    quad_tree_node<double> root{{{0, 0}, {800, 600}}, 25};
-    std::vector<phys_obj<double>> objs;
-    // objs.assign(50, phys_obj<double>{phys_body<double>{rect<double>{{400, 300}, 50, 50}}});
-    objs.push_back(phys_obj<double>{phys_body<double>{rect<double>{{350, 150}, 50, 50}}});
-    objs.push_back(phys_obj<double>{phys_body<double>{rect<double>{{650, 450}, 50, 50}}});
-    for (auto obj : objs) {
+    // 1. initialize quad tree
+    quad_tree_node<double> root{nullptr, {{0, 0}, {800, 600}}, 25, 1, 5};
+    auto& objs = root.objs;
+
+    std::vector<phys_obj<double>> all_render_objs;
+    all_render_objs.reserve(101);
+    /*
+    for (int i = 0; i < 100; ++i) {
+        all_render_objs.emplace_back(
+            phys_body<double>{
+                rect<double>{
+                    {
+                        400 + static_cast<double>(std::rand() % 400) * (std::rand() % 2 == 1 ? -1 : 1),
+                        300 + static_cast<double>(std::rand() % 300) * (std::rand() % 2 == 1 ? -1 : 1)
+                    },
+                    50, 50
+                }
+            }
+        );
+    }
+    */
+    for (int i = 0; i < 100; ++i) {
+        all_render_objs.emplace_back(phys_body<double>(rect<double>(vec2<double>(400 + i * 10, 300 + i * 10), 25, 25)));
+    }
+
+    for (auto& obj : all_render_objs) {
+        // 原主人依然持有所有权
         root.insert(&obj);
     }
+
+    // 2. initialize sdl2
     SDL2pp::SDL sdl(SDL_INIT_EVERYTHING);
     SDL2pp::Window window("title", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_SHOWN);
     window.Show();
     SDL2pp::Renderer renderer(window, -1, SDL_RENDERER_ACCELERATED);
+
+    // 3. begining event loop
     SDL_Event ev;
     while (true) {
         while (SDL_PollEvent(&ev)) {
@@ -78,6 +102,8 @@ int main(int argc, char* argv[]) {
             default: ;
             }
         }
+
+        // 5. render quad tree content
         renderer.Clear();
         render(renderer, root);
         renderer.Present();

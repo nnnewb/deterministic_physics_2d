@@ -4,7 +4,6 @@
 #include "SDL2pp/Renderer.hh"
 #include "quad_tree_node.h"
 #include "SDL2pp/Color.hh"
-#include "case.h"
 #include "phys_obj.h"
 
 namespace weak_ptr {
