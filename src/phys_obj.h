@@ -22,6 +22,7 @@ namespace weak_ptr {
     struct phys_obj {
         UserData* user_data;
         phys_body<Real> body;
+        bool active = true;
 
         explicit phys_obj(const phys_body<Real>& body, UserData* user_data = nullptr);
     };
