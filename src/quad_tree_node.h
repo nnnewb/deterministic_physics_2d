@@ -13,34 +13,34 @@ namespace weak_ptr {
     // 不持有 phys_obj 的所有权，所有的 phys_obj 都归属于 world 管辖，由 world 提供 builder 构建
     template <typename Real>
     struct quad_tree_node {
-        quad_tree_node* parent = nullptr;
-        std::vector<phys_obj<Real>*> objs{};
-        std::array<std::shared_ptr<quad_tree_node>, 4> nodes{};
-        aabb<Real> boarder_box{};
-        bool is_leaf = true;
-        const i32 objs_maximum;
-        const u32 depth_maximum = 1;
-        const u32 depth = 1;
+        quad_tree_node* parent = nullptr;                       // quad tree parent node
+        std::vector<phys_obj<Real>*> objs{};                    // quad tree child objects
+        std::array<std::shared_ptr<quad_tree_node>, 4> nodes{}; // quad tree child nodes
+        aabb<Real> boarder_box{};                               // zone
+        bool is_leaf = true;                                    // is quad tree node had no child nodes
+        const i32 objs_maximum;                                 // maximum objects can be contained before split
+        const u32 depth_maximum = 1;                            // split times maximum
+        const u32 depth = 1;                                    // current node split times
+        u32 children_size = 0;                                  // how many child objects contained
 
         quad_tree_node(quad_tree_node* parent, aabb<Real> boarder_box, i32 objs_maximum, u32 node_depth,
                        u32 depth_max);
 
         void insert(phys_obj<Real>* obj);
 
-        void split();
+        bool erase(phys_obj<Real>* obj);
 
-        u32 tree_depth() const {
-            auto ret = depth;
-            for (const auto& n : nodes) {
-                if (nullptr != n) {
-                    auto child_node_depth = n->tree_depth();
-                    if (child_node_depth > ret) {
-                        ret = child_node_depth;
-                    }
+        void resolve_active() {
+            for (auto& obj : objs) {
+                if (obj->active) {
+                    // todo: allow child objects move position and rotate, quad tree node should resolve object move from one node to another node.
                 }
             }
-            return ret;
         }
+
+        void split();
+
+        u32 tree_depth() const;
     };
 
     template <typename Real>
@@ -50,10 +50,13 @@ namespace weak_ptr {
         , boarder_box(std::move(boarder_box))
         , objs_maximum(objs_maximum)
         , depth_maximum(depth_max)
-        , depth(node_depth) {}
+        , depth(node_depth) {
+    }
 
     template <typename Real>
     void quad_tree_node<Real>::insert(phys_obj<Real>* obj) {
+        ++children_size;
+
         if (is_leaf || depth >= depth_maximum) {
             objs.push_back(obj);
             if (objs.size() >= objs_maximum && depth < depth_maximum) {
@@ -79,6 +82,27 @@ namespace weak_ptr {
                 objs.push_back(obj);
             }
         }
+    }
+
+    template <typename Real>
+    bool quad_tree_node<Real>::erase(phys_obj<Real>* obj) {
+        auto iter = std::find_if(objs.begin(), objs.end(), [obj](const phys_obj<Real>* other)
+        {
+            return other == obj;
+        });
+        if (iter == objs.end()) {
+            for (auto& n : nodes) {
+                if (n->erase(obj)) {
+                    --children_size;
+                    return true;
+                }
+            }
+        } else {
+            objs.erase(obj);
+            --children_size;
+            return true;
+        }
+        return false;
     }
 
     template <typename Real>
@@ -113,6 +137,20 @@ namespace weak_ptr {
         for (auto obj : objs_copy) {
             insert(obj);
         }
+    }
+
+    template <typename Real>
+    u32 quad_tree_node<Real>::tree_depth() const {
+        auto ret = depth;
+        for (const auto& n : nodes) {
+            if (nullptr != n) {
+                auto child_node_depth = n->tree_depth();
+                if (child_node_depth > ret) {
+                    ret = child_node_depth;
+                }
+            }
+        }
+        return ret;
     }
 }
 

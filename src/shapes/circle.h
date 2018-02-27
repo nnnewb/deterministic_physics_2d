@@ -1,13 +1,11 @@
-#ifndef WEAK_PTR_CIRCLE_H
-#define WEAK_PTR_CIRCLE_H
-
-#include "vec2.h"
-
-#define POW2(x) ((x)*(x))
+#ifndef WEAK_PTR_SHAPE_CIRCLE_H
+#define WEAK_PTR_SHAPE_CIRCLE_H
+#include "shape.h"
+#include <stdexcept>
 
 namespace weak_ptr {
     template <typename Real>
-    struct circle {
+    struct circle : shape<Real> {
         vec2<Real> center;
         Real radius;
 
@@ -26,19 +24,24 @@ namespace weak_ptr {
         circle& operator=(circle&& other) noexcept;
 
         bool has_intersection(const circle& other);
+
+        aabb<Real> compute_aabb() const override;
     };
 
     template <typename Real>
-    circle<Real>::circle(const vec2<Real>& center, const Real& radius): center(center),
-                                                                        radius(radius) {}
+    circle<Real>::circle(const vec2<Real>& center, const Real& radius): center(center)
+                                                                      , radius(radius) {
+    }
 
     template <typename Real>
-    circle<Real>::circle(const circle& other): center(other.center),
-                                               radius(other.radius) {}
+    circle<Real>::circle(const circle& other): center(other.center)
+                                             , radius(other.radius) {
+    }
 
     template <typename Real>
-    circle<Real>::circle(circle&& other) noexcept: center(std::move(other.center)),
-                                                   radius(std::move(other.radius)) {}
+    circle<Real>::circle(circle&& other) noexcept: center(std::move(other.center))
+                                                 , radius(std::move(other.radius)) {
+    }
 
     template <typename Real>
     circle<Real>& circle<Real>::operator=(const circle& other) {
@@ -62,8 +65,19 @@ namespace weak_ptr {
     bool circle<Real>::has_intersection(const circle& other) {
         Real r = this->radius + other.radius;
         r *= r;
-        return r < POW2(this->center.x + other.center.x) + POW2(this->center.y + other.center.y);
+        auto xpow2 = this->center.x + other.center.x;
+        xpow2 *= xpow2;
+        auto ypow2 = this->center.y + other.center.y;
+        ypow2 *= ypow2;
+        return r < xpow2 + ypow2;
+    }
+
+    template <typename Real>
+    aabb<Real> circle<Real>::compute_aabb() const {
+        // todo: implement this function
+        return {};
     }
 }
 
-#endif // WEAK_PTR_CIRCLE_H
+
+#endif // WEAK_PTR_SHAPE_CIRCLE_H
