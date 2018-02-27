@@ -26,10 +26,8 @@ namespace weak_ptr {
         for (const phys_obj<Real>* obj : node.objs) {
             render(renderer, *obj);
         }
-        if (!node.is_leaf) {
-            for (const std::shared_ptr<quad_tree_node<Real>>& nd : node.nodes) {
-                render(renderer, *nd);
-            }
+        for (const auto& n : node.nodes) {
+            if (nullptr != n) render(renderer, *n);
         }
     }
 }

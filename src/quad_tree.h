@@ -22,7 +22,7 @@ namespace weak_ptr {
     u32 quad_tree<Real>::get_depth() {
         auto calculate_depth = [&calculate_depth](const quad_tree_node<Real>* node)-> u32 {
             if (nullptr != node) {
-                auto depth = node->depth;
+                auto depth = node->tree_depth;
                 for (const auto& n : node->nodes) {
                     auto child_depth = calculate_depth(n.get());
                     if (child_depth > depth) {
