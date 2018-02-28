@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) {
     }
 
     for (auto& obj : all_render_objs) {
-        // 原主人依然持有所有权
+        // 鍘熶富浜轰緷鐒舵寔鏈夋墍鏈夋潈
         root.insert(&obj);
     }
 

@@ -4,9 +4,14 @@
 
 namespace weak_ptr {
     template <typename Real>
-    struct rect_collider : collider<Real> {
-
+    struct circle_collider : collider<Real> {
+        bool collide_with(const collider<Real>& other) override;
     };
+
+    template <typename Real>
+    bool circle_collider<Real>::collide_with(const collider<Real>& other) {
+        return false;
+    }
 }
 
 #endif // WEAK_PTR_CIRCLE_COLLIDER_H

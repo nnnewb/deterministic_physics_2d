@@ -29,19 +29,19 @@ namespace weak_ptr {
     };
 
     template <typename Real>
-    circle<Real>::circle(const vec2<Real>& center, const Real& radius): center(center)
-                                                                      , radius(radius) {
-    }
+    circle<Real>::circle(const vec2<Real>& center, const Real& radius)
+        : center(center)
+        , radius(radius) { }
 
     template <typename Real>
-    circle<Real>::circle(const circle& other): center(other.center)
-                                             , radius(other.radius) {
-    }
+    circle<Real>::circle(const circle& other)
+        : center(other.center)
+        , radius(other.radius) { }
 
     template <typename Real>
-    circle<Real>::circle(circle&& other) noexcept: center(std::move(other.center))
-                                                 , radius(std::move(other.radius)) {
-    }
+    circle<Real>::circle(circle&& other) noexcept
+        : center(std::move(other.center))
+        , radius(std::move(other.radius)) { }
 
     template <typename Real>
     circle<Real>& circle<Real>::operator=(const circle& other) {

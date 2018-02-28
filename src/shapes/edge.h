@@ -1,6 +1,7 @@
 #ifndef WEAK_PTR_SHAPE_EDGE_H
 #define WEAK_PTR_SHAPE_EDGE_H
 #include "shape.h"
+#include "aabb.h"
 
 namespace weak_ptr {
     template <typename Real>
@@ -10,6 +11,10 @@ namespace weak_ptr {
         edge();
 
         edge(const vec2<Real>& vertex1, const vec2<Real>& vertex2);
+
+        ~edge() override = default;
+
+        aabb<Real> compute_aabb() const override;
     };
 
     template <typename Real>
@@ -18,8 +23,13 @@ namespace weak_ptr {
     }
 
     template <typename Real>
-    edge<Real>::edge(const vec2<Real>& vertex1, const vec2<Real>& vertex2): vertex1(vertex1)
-                                                                          , vertex2(vertex2) {
+    edge<Real>::edge(const vec2<Real>& vertex1, const vec2<Real>& vertex2)
+        : vertex1(vertex1)
+        , vertex2(vertex2) { }
+
+    template <typename Real>
+    aabb<Real> edge<Real>::compute_aabb() const {
+        return {};
     }
 }
 
