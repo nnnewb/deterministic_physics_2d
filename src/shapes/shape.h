@@ -1,13 +1,9 @@
 #ifndef WEAK_PTR_SHAPE_H
 #define WEAK_PTR_SHAPE_H
 #include "aabb.h"
+#include "utils/sat.h"
 
 namespace weak_ptr {
-    /**
-     * \brief
-     * shape base class
-     * \tparam Real number type
-     */
     template <typename Real>
     struct shape {
         enum class shape_type {
@@ -21,6 +17,8 @@ namespace weak_ptr {
         virtual ~shape() =0;
 
         virtual aabb<Real> compute_aabb() const =0;
+
+        virtual projection<Real> project(vec2<Real> axis) const = 0;
     };
 }
 

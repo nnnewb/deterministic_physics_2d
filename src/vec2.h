@@ -61,6 +61,10 @@ namespace weak_ptr {
             seed ^= (seed << 6) + (seed >> 2) + 0x250B1161 + hash_value(obj.y);
             return seed;
         }
+
+        Real dot(vec2 other) {
+            return x * other.x + y * other.y;
+        }
     };
 
     // vec2 implementation

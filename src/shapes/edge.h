@@ -15,6 +15,8 @@ namespace weak_ptr {
         ~edge() override = default;
 
         aabb<Real> compute_aabb() const override;
+
+        projection<Real> project(vec2<Real> axis) const override;
     };
 
     template <typename Real>
@@ -30,6 +32,21 @@ namespace weak_ptr {
     template <typename Real>
     aabb<Real> edge<Real>::compute_aabb() const {
         return {};
+    }
+
+    template <typename Real>
+    projection<Real> edge<Real>::project(vec2<Real> axis) const {
+        projection<Real> ret;
+        ret.minimum = axis.dot(vertex1);
+        ret.maximum = ret.minimum;
+        auto result = axis.dot(vertex2);
+        if (result < ret.minimum) {
+            ret.minimum = result;
+        }
+        if (result > ret.maximum) {
+            ret.maximum = result;
+        }
+        return ret;
     }
 }
 

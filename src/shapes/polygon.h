@@ -19,11 +19,14 @@ namespace weak_ptr {
 
         aabb<Real> compute_aabb() const override;
 
+        projection<Real> project(vec2<Real> axis) const override;
+
         friend std::ostream& operator<<(std::ostream& os, const polygon& obj) {
             return os
                    << static_cast<const shape<Real>&>(obj)
                    << " vertices: " << obj.vertices;
         }
+
     };
 
     template <typename Real>
@@ -41,6 +44,23 @@ namespace weak_ptr {
     aabb<Real> polygon<Real>::compute_aabb() const {
         // todo: calculate aabb around polygon shape
         return {};
+    }
+
+    template <typename Real>
+    projection<Real> polygon<Real>::project(vec2<Real> axis) const {
+        projection<Real> ret;
+        ret.minimum = axis.dot(vertices[0]);
+        ret.maximum = ret.minimum;
+        for (auto vertex : vertices) {
+            const auto result = vertex.dot(axis);
+            if (ret.minimum > result) {
+                ret.minimum = result;
+            }
+            if (ret.maximum < result) {
+                ret.maximum = result;
+            }
+        }
+        return ret;
     }
 }
 

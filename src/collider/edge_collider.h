@@ -8,6 +8,8 @@ namespace weak_ptr {
     template <typename Real>
     struct edge_collider : collider<Real> {
         edge<Real> edge_shape;
+
+        bool collide_with(const collider<Real>& other, const transform<Real>& xf) override;
     };
 }
 
