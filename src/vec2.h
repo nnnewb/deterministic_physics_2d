@@ -4,10 +4,30 @@
 #include "m.h"
 
 namespace uniq {
-    template <typename Real>
+    template<typename Real>
     struct vec2 {
     public:
         Real x, y, length;
+
+        vec2() = default;
+
+        vec2(Real x, Real y)
+            : x(x),
+              y(y),
+              length(math::hypot(x, y)) {
+        }
+
+        vec2 operator-(vec2 rhs) const {
+            return {x - rhs.x, y - rhs.y};
+        }
+
+        vec2 operator+(vec2 rhs) const {
+            return {x + rhs.x, y + rhs.y};
+        }
+
+        vec2 prep() const {
+            return {y, -x};
+        }
 
         Real distance(vec2 v) const {
             return math::hypot(x - v.x, y - v.y);
@@ -17,8 +37,8 @@ namespace uniq {
             return x * rhs.x + y * rhs.y;
         }
 
-        // ÇóÏòÁ¿µ½ÁíÒ»¸öÏòÁ¿µÄÍ¶Ó°µã
-        // ¹«Ê½ÍÆµ¼¹ı³ÌÈçÏÂ
+        // æ±‚å‘é‡åˆ°å¦ä¸€ä¸ªå‘é‡çš„æŠ•å½±ç‚¹
+        // å…¬å¼æ¨å¯¼è¿‡ç¨‹å¦‚ä¸‹
         //
         // dot(self, v) = mod(self) * mod(v) * cos(theta)
         // direction = normalize(v)
