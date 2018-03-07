@@ -1,8 +1,7 @@
 #ifndef UNIQ_VEC2_H
 #define UNIQ_VEC2_H
-
-#include "m.h"
 #include <ostream>
+#include "m.h"
 
 namespace uniq {
     template <typename Real>

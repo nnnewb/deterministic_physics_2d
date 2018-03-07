@@ -1,6 +1,7 @@
 #ifndef UNIQ_COLLIDER_POLYGON_H
 #define UNIQ_COLLIDER_POLYGON_H
 
+#include <utility>
 #include "collider.h"
 #include "../shapes/polygon.h"
 
@@ -9,9 +10,10 @@ namespace uniq {
     struct collider_polygon : collider<Real> {
         polygon<Real> polygon_shape;
 
-        explicit collider_polygon(const polygon<Real>& poly)
+        explicit collider_polygon(polygon<Real> poly)
             : collider(k_polygon)
-            , polygon_shape(poly) { }
+            , polygon_shape(std::move(poly)) {
+        }
 
         collider_polygon(const collider_polygon& other) = default;
 
@@ -36,15 +38,12 @@ namespace uniq {
         }
 
         bool collide_with(const collider_polygon& other) const {
-            for (decltype(polygon_shape.compute_vertices().size()) idx = 0;
-                 idx < polygon_shape.compute_vertices().size() - 1;
-                 ++idx) {
-                vec2<Real> edge_vec = polygon_shape.compute_vertices()[idx] - polygon_shape.compute_vertices()[idx + 1];
-                vec2<Real> axis_vec = edge_vec.norml();
+            for (auto edge : polygon_shape) {
+                vec2<Real> axis = edge.norml();
 
                 // project to this axis
-                auto self_projection = polygon_shape.project(axis_vec);
-                auto other_projection = other.polygon_shape.project(axis_vec);
+                auto self_projection = polygon_shape.project(axis);
+                auto other_projection = other.polygon_shape.project(axis);
                 if (!math::overlap(self_projection.first,
                                    self_projection.second,
                                    other_projection.first,
@@ -52,16 +51,7 @@ namespace uniq {
                     return false;
                 }
             }
-            auto axis_vec = polygon_shape.compute_vertices().front() - polygon_shape.compute_vertices().back();
-            axis_vec = axis_vec.norml();
-            // project to last axis
-            auto self_projection = polygon_shape.project(axis_vec);
-            auto other_projection = other.polygon_shape.project(axis_vec);
-            auto self_final_result = math::overlap(self_projection.first,
-                                                   self_projection.second,
-                                                   other_projection.first,
-                                                   other_projection.second);
-            return self_final_result;
+            return true;
         }
 
         vec2<Real> seprate_vec(const collider<Real>& other) const override {

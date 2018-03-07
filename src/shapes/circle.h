@@ -3,6 +3,8 @@
 
 #include <vector>
 #include "shape.h"
+#include "aabb.h"
+#include "transform.h"
 
 namespace uniq {
     template <typename Real>

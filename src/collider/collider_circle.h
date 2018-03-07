@@ -11,7 +11,8 @@ namespace uniq {
 
         explicit collider_circle(const circle<Real>& circ)
             : collider(k_circle)
-            , circle_shape(circ) {}
+            , circle_shape(circ) {
+        }
 
         collider_circle(const collider_circle& other) = default;
 
@@ -23,11 +24,17 @@ namespace uniq {
 
         ~collider_circle() override = default;
 
-        bool collide_with(const collider<Real>& other) const override;
+        bool collide_with(const collider<Real>& other) const override {
+            throw std::logic_error("This method is not implemented.");
+        }
 
-        vec2<Real> seprate_vec(const collider<Real>& other) const override;
+        vec2<Real> seprate_vec(const collider<Real>& other) const override {
+            throw std::logic_error("This method is not implemented.");
+        }
 
-        void translate(const transform<Real>& xf) override;
+        void translate(const transform<Real>& xf) override {
+            circle_shape.translate(xf);
+        }
     };
 }
 

@@ -1,7 +1,14 @@
 ﻿#ifndef UNIQ_POLYGON_H
 #define UNIQ_POLYGON_H
 
+#include <cassert>
+#include <vector>
+#include <utility>
 #include "shape.h"
+#include "aabb.h"
+#include "transform.h"
+#include "polygon_edge_iter.h"
+
 
 namespace uniq {
     template <typename Real>
@@ -24,7 +31,8 @@ namespace uniq {
     public:
         explicit polygon(const std::vector<vec2<Real>>& vertices)
             : vertices_(vertices)
-            , aabb_(build_aabb(vertices)) { }
+            , aabb_(build_aabb(vertices)) {
+        }
 
         polygon(const polygon& other) = default;
 
@@ -81,6 +89,14 @@ namespace uniq {
 
             // rebuild aabb
             aabb_ = build_aabb(vertices_);
+        }
+
+        polygon_edge_iterator<Real> begin() const {
+            return polygon_edge_iterator<Real>(vertices_);
+        }
+
+        polygon_edge_iterator<Real> end() const {
+            return polygon_edge_iterator<Real>(vertices_, vertices_.end());
         }
     };
 }
