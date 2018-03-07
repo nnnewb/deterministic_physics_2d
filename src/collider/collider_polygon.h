@@ -24,6 +24,14 @@ namespace uniq {
         ~collider_polygon() override = default;
 
         bool collide_with(const collider<Real>& other) const override {
+            switch (other.type) {
+            case k_polygon:
+                return collide_with(dynamic_cast<const collider_polygon&>(other));
+            case k_circle:
+            case k_unknow:
+            default:
+                ;
+            }
             throw std::logic_error("This method not implemented.");
         }
 
