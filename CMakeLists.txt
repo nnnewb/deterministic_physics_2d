@@ -13,6 +13,10 @@ else ()
     message(STATUS "Found SDL2_gfx library - ${SDL2GFX}")
 endif ()
 
+if(MSVC)
+	add_compile_options(-utf-8)
+endif()
+
 file(GLOB_RECURSE TESTBED_SOURCE_FILES
         "src/*.h"
         "testbed/*.cpp"
