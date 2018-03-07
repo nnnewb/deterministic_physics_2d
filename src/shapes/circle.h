@@ -67,6 +67,16 @@ namespace uniq {
                  max = center_.dot(axis) / axis.length + radius_;
             return {min, max};
         }
+
+        void translate(const transform<Real>& xf) override {
+            center_ += xf.motion;
+            // todo: rotation transform need implement
+            // rebuild aabb
+            aabb_ = {
+                center_ - vec2<Real>(radius_, radius_),
+                center_ + vec2<Real>(radius_, radius_)
+            };
+        }
     };
 }
 

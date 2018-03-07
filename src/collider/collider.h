@@ -9,7 +9,8 @@ namespace uniq {
     struct collider {
         collider_type type = k_unknow;
 
-        collider() = default;
+        explicit collider(const collider_type t)
+            : type(t) {};
 
         collider(const collider& other) = default;
 
@@ -24,6 +25,8 @@ namespace uniq {
         virtual bool collide_with(const collider& other) const = 0;
 
         virtual vec2<Real> seprate_vec(const collider& other) const = 0;
+
+        virtual void translate(const transform<Real>& xf) = 0;
     };
 }
 

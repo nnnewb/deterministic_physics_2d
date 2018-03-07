@@ -72,6 +72,16 @@ namespace uniq {
             }
             return {min, max};
         }
+
+        void translate(const transform<Real>& xf) override {
+            for (auto& vertex : vertices_) {
+                vertex + xf.motion;
+                // todo: rotation transform need implement
+            }
+
+            // rebuild aabb
+            aabb_ = build_aabb(vertices_);
+        }
     };
 }
 

@@ -4,9 +4,10 @@
 #include <vector>
 #include "aabb.h"
 #include "vec2.h"
+#include "transform.h"
 
 namespace uniq {
-    template<typename Real>
+    template <typename Real>
     class shape {
     public:
         shape() = default;
@@ -26,6 +27,8 @@ namespace uniq {
         virtual const std::vector<vec2<Real>>& compute_vertices() const = 0;
 
         virtual std::pair<Real, Real> project(vec2<Real> axis) const = 0;
+
+        virtual void translate(const transform<Real>& xf) = 0;
     };
 }
 
