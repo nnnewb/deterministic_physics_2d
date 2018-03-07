@@ -13,6 +13,15 @@ int main(int argc, char* argv[]) {
     SDL_Event event;
     bool running = true;
 
+    const uniq::polygon<double> poly{{{100, 100}, {50, 50}, {150, 50}}};
+    const uniq::polygon<double> poly1{{{100, 90}, {120, 80}, {307, 119}, {149, 219}}};
+    uniq::collider_polygon<double> poly_collider(poly);
+    uniq::collider_polygon<double> poly_collider1(poly1);
+    const uniq::transform<double> xf1{{1, 0}, 0}, xf2{{-1, 0}, 0};
+    const int64_t deltaTime = 1000 / 60;
+    int64_t runningTime = 0;
+    auto switch_flag = false;
+
     while (running) {
         while (SDL_PollEvent(&event)) {
             switch (static_cast<SDL_EventType>(event.type)) {
@@ -120,12 +129,29 @@ int main(int argc, char* argv[]) {
 
         renderer.SetDrawColor({0xff, 0xff, 0xff});
         renderer.Clear();
-        uniq::polygon<double> poly{{{100, 100}, {50, 50}, {150, 50}}};
-        // uniq::circle<double> circle{{250, 250}, 30};
-        uniq::collider_polygon<double> poly_collider(poly);
-        render(renderer, poly_collider, {0, 0, 0});
-        // render(renderer, circle, {0, 0, 0}, true);
+
+        runningTime += deltaTime;
+        if (runningTime > 4000) {
+            switch_flag = !switch_flag;
+            runningTime = 0;
+        }
+        if (switch_flag) {
+            poly_collider1.translate(xf1);
+        } else {
+            poly_collider1.translate(xf2);
+        }
+        if (poly_collider.collide_with(poly_collider1)
+            && poly_collider1.collide_with(poly_collider)) {
+            render(renderer, poly_collider, {128, 0, 0});
+            render(renderer, poly_collider1, {128, 0, 0});
+        } else {
+            render(renderer, poly_collider, {0, 128, 0});
+            render(renderer, poly_collider1, {0, 128, 0});
+        }
+
         renderer.Present();
+        SDL_Delay(deltaTime);
     }
+
     return 0;
 }

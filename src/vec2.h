@@ -38,9 +38,8 @@ namespace uniq {
                    << " y: " << obj.y;
         }
 
-        // 取逆时针旋转90度之后的值
         vec2 norml() const {
-            return {y, x};
+            return {y, -x};
         }
 
         Real distance(vec2 v) const {

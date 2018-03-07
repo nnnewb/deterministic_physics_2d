@@ -75,7 +75,7 @@ namespace uniq {
 
         void translate(const transform<Real>& xf) override {
             for (auto& vertex : vertices_) {
-                vertex + xf.motion;
+                vertex = vertex + xf.motion;
                 // todo: rotation transform need implement
             }
 

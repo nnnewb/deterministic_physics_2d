@@ -33,7 +33,8 @@ namespace uniq {
         });
 
         if (render_aabb) {
-            renderer.SetDrawColor({0xff, 0, 0});
+            renderer.SetDrawBlendMode(SDL_BLENDMODE_BLEND);
+            renderer.SetDrawColor({0xff, 0, 0, 128});
             auto box = poly.compute_aabb();
             renderer.DrawRect({
                 static_cast<int>(box.min.x),
@@ -61,7 +62,8 @@ namespace uniq {
                    color.a);
         if (render_aabb) {
             auto box = circle.compute_aabb();
-            renderer.SetDrawColor({0xff, 0, 0});
+            renderer.SetDrawBlendMode(SDL_BLENDMODE_BLEND);
+            renderer.SetDrawColor({0xff, 0, 0, 128});
             renderer.DrawRect({
                 static_cast<int>(box.min.x),
                 static_cast<int>(box.min.y)

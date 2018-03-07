@@ -49,10 +49,11 @@ namespace uniq {
             // project to last axis
             auto self_projection = polygon_shape.project(axis_vec);
             auto other_projection = other.polygon_shape.project(axis_vec);
-            return math::overlap(self_projection.first,
-                                 self_projection.second,
-                                 other_projection.first,
-                                 other_projection.second);
+            auto self_final_result = math::overlap(self_projection.first,
+                                                   self_projection.second,
+                                                   other_projection.first,
+                                                   other_projection.second);
+            return self_final_result;
         }
 
         vec2<Real> seprate_vec(const collider<Real>& other) const override {

@@ -11,14 +11,14 @@ namespace uniq {
     void render(SDL2pp::Renderer& renderer,
                 const collider_circle<Real>& render_collider,
                 const SDL2pp::Color& color) {
-        render(renderer, render_collider.circle_shape, {0, 0, 0}, true);
+        render(renderer, render_collider.circle_shape, color, true);
     }
 
     template <typename Real>
     void render(SDL2pp::Renderer& renderer,
                 const collider_polygon<Real>& render_collider,
                 const SDL2pp::Color& color) {
-        render(renderer, render_collider.polygon_shape, {0, 0, 0}, true);
+        render(renderer, render_collider.polygon_shape, color, true);
     }
 }
 
