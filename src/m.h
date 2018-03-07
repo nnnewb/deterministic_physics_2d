@@ -5,6 +5,12 @@
 
 namespace uniq {
     namespace math {
+        template <typename Real>
+        bool overlap(Real min1, Real max1, Real min2, Real max2) {
+            return (min1 > min2 && min1 < max2) ||
+                   (min2 > min1 && min2 < max1);
+        }
+
         inline auto sqrt(float f) -> decltype(std::sqrt(f)) {
             return std::sqrt(f);
         }

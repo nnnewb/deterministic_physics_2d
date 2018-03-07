@@ -2,19 +2,26 @@
 #define UNIQ_VEC2_H
 
 #include "m.h"
+#include <ostream>
 
 namespace uniq {
-    template<typename Real>
+    template <typename Real>
     struct vec2 {
-    public:
         Real x, y, length;
 
         vec2() = default;
 
         vec2(Real x, Real y)
-            : x(x),
-              y(y),
-              length(math::hypot(x, y)) {
+            : x(x)
+            , y(y)
+            , length(math::hypot(x, y)) { }
+
+        vec2 operator*(Real rhs) const {
+            return {x * rhs, y * rhs};
+        }
+
+        vec2 operator/(Real rhs) const {
+            return {x / rhs, y / rhs};
         }
 
         vec2 operator-(vec2 rhs) const {
@@ -25,8 +32,15 @@ namespace uniq {
             return {x + rhs.x, y + rhs.y};
         }
 
-        vec2 prep() const {
-            return {y, -x};
+        friend std::ostream& operator<<(std::ostream& os, const vec2& obj) {
+            return os
+                   << "x: " << obj.x
+                   << " y: " << obj.y;
+        }
+
+        // 取逆时针旋转90度之后的值
+        vec2 norml() const {
+            return {y, x};
         }
 
         Real distance(vec2 v) const {
