@@ -29,6 +29,7 @@ namespace uniq {
         virtual std::pair<Real, Real> project(vec2<Real> axis) const = 0;
 
         virtual void translate(const transform<Real>& xf) = 0;
+
     };
 }
 

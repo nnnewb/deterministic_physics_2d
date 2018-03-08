@@ -12,8 +12,7 @@ namespace uniq {
 
         explicit collider_polygon(polygon<Real> poly)
             : collider(k_polygon)
-            , polygon_shape(std::move(poly)) {
-        }
+            , polygon_shape(std::move(poly)) { }
 
         collider_polygon(const collider_polygon& other) = default;
 
@@ -35,6 +34,20 @@ namespace uniq {
                 ;
             }
             throw std::logic_error("This method not implemented.");
+        }
+
+        bool collide_with(const vec2<Real>& p) const override {
+            if (polygon_shape.compute_aabb().collide_point(p)) {
+                for (auto edge : polygon_shape) {
+                    auto self_projection = polygon_shape.project(edge.norml());
+                    auto p_projection = p.dot(edge.norml()) / edge.norml().length;
+                    if (!math::contains(p_projection, self_projection.first, self_projection.second)) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            return false;
         }
 
         bool collide_with(const collider_polygon& other) const {

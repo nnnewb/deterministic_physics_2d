@@ -58,8 +58,19 @@ int main(int argc, char* argv[]) {
                 break;
             case SDL_MOUSEMOTION:
                 break;
-            case SDL_MOUSEBUTTONDOWN:
+            case SDL_MOUSEBUTTONDOWN: {
+                uniq::vec2<double> pos{
+                    static_cast<double>(event.button.x),
+                    static_cast<double>(event.button.y)
+                };
+                if (poly_collider.collide_with(pos)) {
+                    std::cerr << "click collide 1";
+                }
+                if (poly_collider1.collide_with(pos)) {
+                    std::cerr << "click collide 2";
+                }
                 break;
+            }
             case SDL_MOUSEBUTTONUP:
                 break;
             case SDL_MOUSEWHEEL:

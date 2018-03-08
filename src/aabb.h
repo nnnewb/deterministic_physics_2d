@@ -4,13 +4,16 @@
 #include "vec2.h"
 
 namespace uniq {
-    template<typename Real>
+    template <typename Real>
     struct aabb {
         vec2<Real> min, max;
 
         aabb(vec2<Real> min, vec2<Real> max)
-            : min(min),
-              max(max) {
+            : min(min)
+            , max(max) { }
+
+        bool collide_point(vec2<Real> p) {
+            return math::contains(p.x, min.x, max.x) && math::contains(p.y, min.y, max.y);
         }
     };
 }

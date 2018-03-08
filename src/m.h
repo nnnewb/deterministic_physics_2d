@@ -5,10 +5,47 @@
 
 namespace uniq {
     namespace math {
+
+        inline auto abs(float val) -> decltype(std::abs(val)) {
+            return std::abs(val);
+        }
+
+        inline auto abs(double val) -> decltype(std::abs(val)) {
+            return std::abs(val);
+        }
+
+        inline auto abs(short val) -> decltype(std::abs(val)) {
+            return std::abs(val);
+        }
+
+        inline auto abs(int val) -> decltype(std::abs(val)) {
+            return std::abs(val);
+        }
+
+        inline auto abs(long val) -> decltype(std::abs(val)) {
+            return std::abs(val);
+        }
+
+        inline auto abs(long long val) -> decltype(std::abs(val)) {
+            return std::abs(val);
+        }
+
+        template <typename Real>
+        bool contains(Real val, Real min, Real max) {
+            return val > min && val < max;
+        }
+
         template <typename Real>
         bool overlap(Real min1, Real max1, Real min2, Real max2) {
-            return (min1 > min2 && min1 < max2) ||
-                   (min2 > min1 && min2 < max1);
+            return contains(min1, min2, max2) || contains(min2, min1, max1);
+        }
+
+        template <typename Real>
+        Real cover(Real min1, Real max1, Real min2, Real max2) {
+            if (overlap(min1, max1, min2, max2)) {
+                return abs(min1 - min2);
+            }
+            return 0;
         }
 
         inline auto sqrt(float f) -> decltype(std::sqrt(f)) {
