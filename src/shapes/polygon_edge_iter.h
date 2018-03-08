@@ -5,7 +5,7 @@
 
 namespace uniq {
     template <typename Real>
-    class polygon_edge_iterator : public std::iterator<std::input_iterator_tag, vec2<Real>> {
+    class polygon_edge_iterator : public std::iterator<std::input_iterator_tag, struct vec2<Real>> {
         using vertex_iter = typename std::vector<vec2<Real>>::const_iterator;
         const std::vector<vec2<Real>>& vertices_array_;
         vertex_iter cur_;
