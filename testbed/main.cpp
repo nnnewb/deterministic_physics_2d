@@ -5,6 +5,7 @@
 
 #include "render_shapes.h"
 #include "render_collider.h"
+#include "sprite.h"
 
 int main(int argc, char* argv[]) {
     SDL2pp::SDL ctx(SDL_INIT_EVERYTHING);
