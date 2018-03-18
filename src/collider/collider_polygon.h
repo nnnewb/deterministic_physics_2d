@@ -11,7 +11,7 @@ namespace uniq {
         polygon<Real> polygon_shape;
 
         explicit collider_polygon(polygon<Real> poly)
-            : collider(k_polygon)
+            : collider<Real>(k_polygon)
             , polygon_shape(std::move(poly)) { }
 
         collider_polygon(const collider_polygon& other) = default;

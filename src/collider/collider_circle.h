@@ -10,7 +10,7 @@ namespace uniq {
         circle<Real> circle_shape;
 
         explicit collider_circle(const circle<Real>& circ)
-            : collider(k_circle)
+            : collider<Real>(k_circle)
             , circle_shape(circ) { }
 
         collider_circle(const collider_circle& other) = default;
