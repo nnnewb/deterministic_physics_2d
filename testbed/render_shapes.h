@@ -1,9 +1,9 @@
 #ifndef UNIQ_RENDER_SHAPES_H
 #define UNIQ_RENDER_SHAPES_H
-#include "SDL2pp/Renderer.hh"
-#include "SDL2_gfxPrimitives.h"
 #include "../src/shapes/polygon.h"
 #include "../src/shapes/circle.h"
+#include "SDL2pp/Renderer.hh"
+#include "SDL2_gfxPrimitives.h"
 
 namespace uniq {
     template <typename Real>

@@ -1,7 +1,6 @@
 #ifndef UNIQ_RENDE_COLLIDER_H
 #define UNIQ_RENDE_COLLIDER_H
 
-#include "SDL2pp/SDL2pp.hh"
 #include "../src/collider/collider_circle.h"
 #include "../src/collider/collider_polygon.h"
 #include "render_shapes.h"
